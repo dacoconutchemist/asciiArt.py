@@ -8,9 +8,10 @@ def asciiArt(im, lim = None, lum = ' .,-~:;=!*#$@'):
             im.thumbnail((lim, lim))
     mapp = lambda a, b, c, d, e: d + float(a - b) / float(c - b) * (e - d)
     i = 0
-    for c in list(im.getdata()):
+    for c in list(im.convert("RGBA").getdata()):
         if i % im.size[0] == 0: ascArt = ascArt + "\n"
-        ascArt = ascArt + str(lum[math.ceil(mapp((c[0] + c[1] + c[2]) / 3, 0, 255, len(lum) - 1, 0))]) + str(lum[round(mapp((c[0] + c[1] + c[2]) / 3, 0, 255, len(lum) - 1, 0))])
+        if c[3] > 250: ascArt = ascArt + str(lum[math.ceil(mapp((c[0] + c[1] + c[2]) / 3, 0, 255, len(lum) - 1, 0))]) + str(lum[round(mapp((c[0] + c[1] + c[2]) / 3, 0, 255, len(lum) - 1, 0))])
+        else: ascArt = ascArt + lum[0] * 2
         i = i + 1
     return ascArt
 def asciiArtFn(fn, lim = None, lum = ' .,-~:;=!*#$@'):
